@@ -116,7 +116,6 @@ public class TelepeageMachinePaiement extends PeageMachineUsager{
         }
     }
 
-
     protected void sortirTroncon(String usager){
         // Les frauduleux qui sont sur l'autoroute(Intersection entre usagers et a_signaler)
         ArrayList<String> frauduleuxSurAutoroute = new ArrayList<>();

@@ -14,6 +14,8 @@ public class PeageContext implements Context{
         USAGERS.add("Jean");
         USAGERS.add("Paul");
         USAGERS.add("Claude");
+        USAGERS.add("Herve");
+        USAGERS.add("Josette");
     }
 
     public ArrayList<String> getAll(){
