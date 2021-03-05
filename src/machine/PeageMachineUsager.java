@@ -18,7 +18,7 @@ public class PeageMachineUsager {
         test(USAGERS.get(0));
     }
 
-    private void test(String u){
+    protected void test(String u){
 
         System.out.println("\n========================");
         //entrer
@@ -28,7 +28,7 @@ public class PeageMachineUsager {
         sortir(u);
     }
 
-    private void entrer(String usager){
+    protected void entrer(String usager){
         if(!usagers.contains(usager)){
             usagers.add(usager);
             System.out.println("Ajout de "+usager+" dans usagers / "+usager+" rentre sur l'autoroute");
@@ -37,7 +37,7 @@ public class PeageMachineUsager {
         }
     }
 
-    private void sortir(String usager){
+    protected void sortir(String usager){
         if(usagers.contains(usager)){
             usagers.remove(usager);
             System.out.println("Suppression de "+usager+" dans usagers / "+usager+" sort de l'autoroute");
