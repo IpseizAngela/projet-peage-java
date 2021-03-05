@@ -5,7 +5,7 @@ import java.util.List;
 
 public class PeageContext implements Context{
 
-    private ArrayList<String> USAGERS;
+    protected ArrayList<String> USAGERS;
 
     public PeageContext(){
         USAGERS = new ArrayList<>();

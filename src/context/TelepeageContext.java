@@ -2,10 +2,10 @@ package context;
 
 import java.util.ArrayList;
 
-public class TelepeageContext implements Context{
+public class TelepeageContext extends PeageContext implements Context{
 
-    private ArrayList<String> BADGE_USAGERS;
-    private ArrayList<String> FRAUDULEUX_USAGERS;
+    protected ArrayList<String> BADGE_USAGERS;
+    protected ArrayList<String> FRAUDULEUX_USAGERS;
 
     public TelepeageContext(){
         BADGE_USAGERS = new ArrayList<>();

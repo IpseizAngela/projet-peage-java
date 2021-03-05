@@ -8,7 +8,7 @@ import java.util.ArrayList;
 public class PeageMachineUsager {
 
     private ArrayList<String> USAGERS;
-    private ArrayList<String> usagers;
+    protected ArrayList<String> usagers;
 
     public PeageMachineUsager(){
         Context context = new PeageContext();
