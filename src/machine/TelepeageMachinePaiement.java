@@ -40,13 +40,12 @@ public class TelepeageMachinePaiement extends PeageMachineUsager{
         //aucun usager n'est à signaler au début
         aSignaler = new ArrayList<>();
 
-        test(USAGERS);
     }
 
-    protected void test(ArrayList<String> aTest){
+    protected void test(){
 
         System.out.println("\n========================");
-        for (String u : aTest) {
+        for (String u : USAGERS) {
             //entrer
             entrerTroncon(u);
             autorise(u);

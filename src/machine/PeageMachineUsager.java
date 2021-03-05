@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 public class PeageMachineUsager {
 
-    private ArrayList<String> USAGERS;
+    protected ArrayList<String> USAGERS;
     protected ArrayList<String> usagers;
 
     public PeageMachineUsager(){
@@ -15,12 +15,11 @@ public class PeageMachineUsager {
         USAGERS = context.getAll();
         usagers = new ArrayList<>();
 
-        test(USAGERS.get(0));
     }
 
-    protected void test(String u){
-
-        System.out.println("\n========================");
+    protected void test(){
+        String u = USAGERS.get(0);
+        System.out.println("\n================ICI========");
         //entrer
         entrer(u);
 
@@ -47,10 +46,11 @@ public class PeageMachineUsager {
     }
 
     protected void sep(){
-        System.out.println("==========================");
+        System.out.println("----------------------");
     }
 
     public static void main(String[] args) {
-        new PeageMachineUsager();
+        PeageMachineUsager m = new PeageMachineUsager();
+        m.test();
     }
 }

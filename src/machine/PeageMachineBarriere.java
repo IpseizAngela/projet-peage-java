@@ -25,17 +25,14 @@ public class PeageMachineBarriere extends TelepeageMachinePaiement{
     private ArrayList<String> USAGERS;
 
     public PeageMachineBarriere(){
-        System.out.println("KIKI");
 
-        /*TypeUsagerContext context = new TypeUsagerContext();
-        System.out.println("la");
+        TypeUsagerContext context = new TypeUsagerContext();
 
-        /*BADGEUSAGERS = context.getBADGE_USAGERS();
+        BADGEUSAGERS = context.getBADGE_USAGERS();
         FRAUDULEUXUSAGER = context.getFRAUDULEUX_USAGERS();
         TICKETUSAGERS = context.getTICKET_USAGERS();
         USAGERS = context.getAll();
 
-        System.out.println("zRHETJRY");
 
         bar1 = false;
         bar2 = false;
@@ -47,7 +44,7 @@ public class PeageMachineBarriere extends TelepeageMachinePaiement{
         peage2 = new ArrayList<>();
         a_verifier = new ArrayList<>();
         a_signaler = new ArrayList<>();
-        ticketUsager = new ArrayList<>();*/
+        ticketUsager = new ArrayList<>();
     }
 
     protected void entrer(String usager){
@@ -79,22 +76,9 @@ public class PeageMachineBarriere extends TelepeageMachinePaiement{
             && !peage2.contains(usager)
             && !usagers.contains(usager)){
 
-            //entrer badge
-            if(!a_verifier.contains(usager)
-            && !dispositif){
-                a_verifier.add(usager);
-                dispositif = true;
-                usagers.add(usager);
-
-                System.out.println(usager+" entre sur le troncon grace à son badge");
-           }else{
-                System.err.println("Erreur à entreTronconBadge : l'usager ne rempli pas les contraintes");
-                System.exit(-1);
-            }
-
-            //entrer barriere
             if(!bar1
-            && !ticketUsager.contains(usager)){
+            && !ticketUsager.contains(usager)
+            && TICKETUSAGERS.contains(usager)){
                 ticketUsager.add(usager);
                 bar1 = true;
                 usagers.add(usager);
@@ -103,13 +87,22 @@ public class PeageMachineBarriere extends TelepeageMachinePaiement{
 
                 fermetureEntre(usager);
 
+                //entrer badge
+            }else if(!a_verifier.contains(usager)
+            && !dispositif){
+                a_verifier.add(usager);
+                dispositif = true;
+                usagers.add(usager);
+
+                System.out.println(usager+" entre sur le troncon grace à son badge");
+
             }else{
-                System.err.println("Erreur à entreTronconBarriere : l'usager ne rempli pas les contraintes");
+                System.err.println("Erreur à entreTroncon_2 : l'usager ne rempli pas les contraintes");
                 System.exit(-1);
             }
 
         }else{
-            System.err.println("Erreur à entreTroncon : l'usager ne rempli pas les contraintes");
+            System.err.println("Erreur à entreTroncon_1 : l'usager ne rempli pas les contraintes");
             System.exit(-1);
         }
     }
@@ -121,6 +114,8 @@ public class PeageMachineBarriere extends TelepeageMachinePaiement{
         && ticketUsager.contains(usager)){
             bar1 = false;
             peage1.remove(usager);
+
+            System.out.println("Fermeture de la barrière");
         }else{
             System.err.println("Erreur à fermetureSortie:  l'usager ne rempli pas les contraintes");
             System.exit(-1);
@@ -149,7 +144,7 @@ public class PeageMachineBarriere extends TelepeageMachinePaiement{
                     System.out.println("L'usager: "+usager+" n'a pas de badge et n'est pas autorisé à passer, il est signalé");
 
                 }
-        }else{
+        }else if(!ticketUsager.contains(usager)){
             System.err.println("Erreur à autorise : l'usager ne rempli pas les contraintes");
             System.exit(-1);
         }
@@ -160,7 +155,7 @@ public class PeageMachineBarriere extends TelepeageMachinePaiement{
         // usagers INTER a_signaler
         ArrayList<String> frauduleuxSurAutoroute = new ArrayList<>();
         for(String u : usagers){
-            if(aSignaler.contains(u)){
+            if(a_signaler.contains(u)){
                 frauduleuxSurAutoroute.add(u);
             }
         }
@@ -176,20 +171,21 @@ public class PeageMachineBarriere extends TelepeageMachinePaiement{
                 peage2.add(usager);
 
                 System.out.println(usager+" entre dans la zone de péage de sortie (utilisateur de badge)");
-            }else{
-                System.err.println("Erreur à débutSortie partie badge :  l'usager ne rempli pas les contraintes");
-            }
+            }else {
+                //sortie ticket
+                if (ticketUsager.contains(usager) || frauduleuxSurAutoroute.contains(usager)) {
+                    peage2.add(usager);
 
-            //sortie
-            if(ticketUsager.contains(usager) || frauduleuxSurAutoroute.contains(usager)){
-                peage2.add(usager);
-
-                System.out.println(usager+" entre dans la zone de péage de sortie (utilisateur de ticket)");
-            }else{
-                System.err.println("Erreur à débutSortie partie ticket :  l'usager ne rempli pas les contraintes");
+                    System.out.println(usager + " entre dans la zone de péage de sortie (utilisateur de ticket)");
+                } else if(FRAUDULEUXUSAGER.contains(usager)) {
+                    System.out.println(usager + " est un fraudeur");
+                }else{
+                    System.err.println("Erreur à débutSortie_2 :  l'usager ne rempli pas les contraintes");
+                    System.exit(-1);
+                }
             }
         }else{
-            System.err.println("Erreur à debutSortie :  l'usager ne rempli pas les contraintes");
+            System.err.println("Erreur à debutSortie_1 :  l'usager ne rempli pas les contraintes");
             System.exit(-1);
         }
     }
@@ -210,48 +206,41 @@ public class PeageMachineBarriere extends TelepeageMachinePaiement{
                         System.out.println(usager+" est sortie du tronçon (utilisateur de badge)");
 
                     }else{
-                        System.err.println("Erreur à sortieTronconBadge :  l'usager ne rempli pas les contraintes");
-                        System.exit(-1);
+                        //sortie frauduleux
+                        ArrayList<String> frauduleuxSurAutoroute = new ArrayList<>();
+                        for(String u : usagers){
+                            if(a_signaler.contains(u)){
+                                frauduleuxSurAutoroute.add(u);
+                            }
+                        }
 
-                    }
+                        if(frauduleuxSurAutoroute.contains(usager)){
+                            usagers.remove(usager);
+                            peage2.remove(usager);
 
-                    //sortie frauduleux
-                    ArrayList<String> frauduleuxSurAutoroute = new ArrayList<>();
-                    for(String u : usagers){
-                        if(aSignaler.contains(u)){
-                            frauduleuxSurAutoroute.add(u);
+                            System.out.println(usager+" est sortie du tronçon en fraudant ! ");
+
                         }
                     }
-
-                    if(frauduleuxSurAutoroute.contains(usager)){
-                        usagers.remove(usager);
-                        peage2.remove(usager);
-
-                        System.out.println(usager+" est sortie du tronçon en fraudant ! ");
-
-                    }else{
-                        System.err.println("Erreur à sortieTronconFrauduleux :  l'usager ne rempli pas les contraintes");
-                        System.exit(-1);
-                    }
                 }
+            }else {
 
-            }
+                //sortie barrière
+                if (!peage1.contains(usager)
+                        && ticketUsager.contains(usager)
+                        && !bar1
+                        && !bar2) {
+                    bar2 = true;
+                    ticketUsager.remove(usager);
+                    usagers.remove(usager);
 
-            //sortie barrière
-            if(!peage1.contains(usager)
-                    && ticketUsager.contains(usager)
-                    && !bar1
-                    && !bar2){
-                bar2 = true;
-                ticketUsager.remove(usager);
-                usagers.remove(usager);
+                    System.out.println(usager + " est sortie du tronçon (utilisateur de badge)");
 
-                System.out.println(usager+" est sortie du tronçon (utilisateur de badge)");
-
-                fermetureSortie(usager);
-            }else{
-                System.err.println("Erreur à sortieTronconBarriere :  l'usager ne rempli pas les contraintes");
-                System.exit(-1);
+                    fermetureSortie(usager);
+                } else {
+                    System.err.println("Erreur à sortieTroncon:  l'usager ne rempli pas les contraintes");
+                    System.exit(-1);
+                }
             }
         }
     }
@@ -325,11 +314,7 @@ public class PeageMachineBarriere extends TelepeageMachinePaiement{
     }
 
     public static void main(String[] args) {
-        System.out.println("ici");
         PeageMachineBarriere m = new PeageMachineBarriere();
-
-        System.out.println("vide");
-        /*System.out.println(m.BADGEUSAGERS.get(0));
 
         m.entrer(m.BADGEUSAGERS.get(0));
         m.sortir(m.BADGEUSAGERS.get(0));
@@ -341,6 +326,6 @@ public class PeageMachineBarriere extends TelepeageMachinePaiement{
 
         m.entrer(m.FRAUDULEUXUSAGER.get(0));
         m.sortir(m.FRAUDULEUXUSAGER.get(0));
-        m.sep();*/
+        m.sep();
     }
 }
