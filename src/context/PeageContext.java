@@ -5,10 +5,8 @@ import java.util.List;
 
 public class PeageContext implements Context{
 
-    protected ArrayList<String> USAGERS;
-
-    public PeageContext(){
-        USAGERS = new ArrayList<>();
+    protected ArrayList<String> USAGERS = new ArrayList<>();
+    {
         USAGERS.add("Anastasia");
         USAGERS.add("Lucy");
         USAGERS.add("Jean");
@@ -16,6 +14,9 @@ public class PeageContext implements Context{
         USAGERS.add("Claude");
         USAGERS.add("Herve");
         USAGERS.add("Josette");
+    }
+
+    public PeageContext(){
     }
 
     public ArrayList<String> getAll(){

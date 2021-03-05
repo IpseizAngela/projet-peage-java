@@ -46,6 +46,10 @@ public class PeageMachineUsager {
         }
     }
 
+    protected void sep(){
+        System.out.println("==========================");
+    }
+
     public static void main(String[] args) {
         new PeageMachineUsager();
     }
