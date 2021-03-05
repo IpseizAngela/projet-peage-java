@@ -1,7 +1,5 @@
 package machine;
 
-import context.PeageContext;
-import context.TelepeageContext;
 import context.TypeUsagerContext;
 
 import java.util.ArrayList;
@@ -271,7 +269,7 @@ public class PeageMachineBarriere extends TelepeageMachinePaiement{
             usagers.remove(usager);
             badgeUsagers.remove(usager);
             peage2.remove(usager);
-
+            dispositif_payé = true;
         }else{
             System.err.println("Erreur à sortieTronconBadge :  l'usager ne rempli pas les contraintes");
             System.exit(-1);
@@ -315,7 +313,15 @@ public class PeageMachineBarriere extends TelepeageMachinePaiement{
 
     public static void main(String[] args) {
         PeageMachineBarriere m = new PeageMachineBarriere();
+        System.out.println("\n========================");
+        for (String u : m.USAGERS) {
+            m.entrer(u);
+            m.sortir(u);
+            m.sep();
+        }
+        System.out.println("\n========================");
 
+        /*
         m.entrer(m.BADGEUSAGERS.get(0));
         m.sortir(m.BADGEUSAGERS.get(0));
         m.sep();
@@ -326,6 +332,7 @@ public class PeageMachineBarriere extends TelepeageMachinePaiement{
 
         m.entrer(m.FRAUDULEUXUSAGER.get(0));
         m.sortir(m.FRAUDULEUXUSAGER.get(0));
-        m.sep();
+        m.sep();*/
+
     }
 }

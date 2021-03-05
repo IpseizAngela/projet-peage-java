@@ -1,6 +1,5 @@
 package machine;
 
-import context.Context;
 import context.PeageContext;
 import context.TelepeageContext;
 
@@ -15,7 +14,7 @@ public class TelepeageMachinePaiement extends PeageMachineUsager{
 
     // Variables
     //Usagers sur l'autoroute avec un badge de télépéage
-    protected ArrayList<String> badge_usagers;
+    protected ArrayList<String> badgeUsagers;
     //Dispositif de détection de passage d'un usager Vrai si un usager vient de passer le télépéage
     protected boolean dispositif;
     //Usager à signaler
@@ -32,7 +31,7 @@ public class TelepeageMachinePaiement extends PeageMachineUsager{
         //l'ensemble des usagers courant est vide, aucun usager n'est sur le tronçon
         usagers = new ArrayList<>();
         //aucun usager avec badge n'est sur le tronçon au début
-        badge_usagers = new ArrayList<>();
+        badgeUsagers = new ArrayList<>();
         //le dispositif n'est pas activé
         dispositif = false;
         // aucun usager n'est à vérifier au début
@@ -91,7 +90,7 @@ public class TelepeageMachinePaiement extends PeageMachineUsager{
             //Le dispositif se remet dans son état de départ car l'usager est passé
             dispositif = false;
             //On ajoute les usagers avec un badge sur le tronçon dans la liste
-            badge_usagers.add(usager);
+            badgeUsagers.add(usager);
             //On enlève l'usager de la liste des usagers à vérifier
             aVerifier.remove(usager);
 
@@ -126,12 +125,12 @@ public class TelepeageMachinePaiement extends PeageMachineUsager{
         // Sortie pour les usages avec badge
         if(usagers.contains(usager) &&
             !aVerifier.contains(usager) &&
-            badge_usagers.contains(usager)){
+            badgeUsagers.contains(usager)){
 
             // On fait un extends de la fonctions entrer
             sortir(usager);
             //l'usager avec badge sort du tronçon
-            badge_usagers.remove(usager);
+            badgeUsagers.remove(usager);
 
             System.out.println("Suppression de "+usager+" dans usagers et badge_usagers / "+usager+" sort de l'autoroute");
         // Sortie pour les usagers sans badge
@@ -148,6 +147,7 @@ public class TelepeageMachinePaiement extends PeageMachineUsager{
     }
 
     public static void main(String[] args) {
-        new TelepeageMachinePaiement();
+        TelepeageMachinePaiement m = new TelepeageMachinePaiement();
+        m.test();
     }
 }
